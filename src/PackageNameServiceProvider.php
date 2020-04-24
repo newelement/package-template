@@ -65,6 +65,9 @@ class PackageNameServiceProvider extends ServiceProvider
             require __DIR__.'/../routes/admin.php';
         });
 
+        // Register Neutrino Bonds
+        $this->registerNeutrinoItems();
+
     }
 
     /**
@@ -109,5 +112,55 @@ class PackageNameServiceProvider extends ServiceProvider
         $this->commands(Commands\InstallCommand::class);
     }
 
+    private function registerNeutrinoItems()
+    {
+        $bond = app('NeutrinoBond');
+
+        /*
+        *
+        * SAMPLE MENU ITEMS
+        */
+
+        /*
+        $menuItems = [
+            [
+            'slot' => 4,
+            'url' => '/admin/locations',
+            'parent_title' => 'Locations',
+            'named_route' => 'neutrino.locations',
+            'fa-icon' => 'fa-map-marked',
+            'children' => [
+                [ 'url' => '/admin/locations', 'title' => 'All Locations' ],
+                [ 'url' => '/admin/location', 'title' => 'Create Location' ],
+            ]
+            ]
+        ];*/
+
+        //$bond->registerMenuItems($menuItems);
+
+
+
+        /*
+        *
+        * SAMPLE ENQUEUE SCRIPT AND STYLES. PUBLIC AND ADMIN.
+        */
+
+        /*
+        $scripts = [
+            '/vendor/newelement/packagename/js/app.js',
+        ];
+
+        $styles = [
+            '/vendor/newelement/packagename/css/styles.css',
+        ];
+        */
+
+        //$bond->enqueueScripts($scripts);
+        //$bond->enqueueStyles($styles);
+
+        //$bond->enqueueAdminScripts($scripts);
+        //$bond->enqueueAdminStyles($styles);
+
+    }
 
 }
