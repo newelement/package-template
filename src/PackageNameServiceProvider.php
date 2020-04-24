@@ -60,7 +60,7 @@ class PackageNameServiceProvider extends ServiceProvider
             'namespace' => 'Newelement\PackageName\Http\Controllers\Admin',
             'prefix' => 'admin',
             'as' => 'packagename.',
-            'middleware' => 'admin.user'
+            'middleware' => ['web', 'admin.user']
         ], function ($router) {
             require __DIR__.'/../routes/admin.php';
         });
