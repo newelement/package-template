@@ -1,0 +1,41 @@
+{
+    "name": "newelement/package",
+    "description": "Package package for Neutrino",
+    "keywords": ["location", "cms", "neutrino"],
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://neutrinocms.com",
+    "support": {
+        "issues": "https://github.com/newelement/package/issues",
+        "source": "https://github.com/newelement/package"
+    },
+    "authors": [
+        {
+            "name": "Don Jones",
+            "email": "newelementdesigns@me.com"
+        }
+    ],
+    "require": {
+        "newelement/neutrino": "*",
+    },
+    "autoload": {
+        "psr-4": {
+            "Newelement\\Package\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Newelement\\Package\\Tests\\": "tests"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Newelement\\Shoppe\\PackageServiceProvider"
+            ],
+            "aliases": {
+                "Shoppe": "Newelement\\Package\\Facades"
+            }
+        }
+    }
+}

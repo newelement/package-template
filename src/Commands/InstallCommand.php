@@ -49,7 +49,7 @@ class InstallCommand extends Command
 
     public function handle(Filesystem $filesystem)
     {
-        $this->info('Publishing the Shoppe assets, database, and config files');
+        $this->info('Publishing the PackageName assets, database, and config files');
         // Publish only relevant resources on install
 
         $this->call('vendor:publish', ['--provider' => PackageNameServiceProvider::class]); // , '--tag' => $tags
@@ -62,26 +62,6 @@ class InstallCommand extends Command
         $process = new Process($composer.' dump-autoload');
         $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
         $process->setWorkingDirectory(base_path())->run();
-
-        $this->info('Adding PackageName routes to routes/web.php');
-
-        $routes_contents = $filesystem->get(base_path('routes/web.php'));
-
-        if (false === strpos($routes_contents, 'PackageName::routes()')) {
-
-            $newContents = str_replace('Neutrino::routesPublic();', '', $routes_contents);
-            $filesystem->put(base_path('routes/web.php'), $newContents);
-
-            $filesystem->append(
-                base_path('routes/web.php'),
-                "\nPackageName::routes();\n"
-            );
-
-            $filesystem->append(
-                base_path('routes/web.php'),
-                "\nNeutrino::routesPublic();\n"
-            );
-        }
 
         $this->info('Seeding data into the database');
         $this->seed('PackageNameDatabaseSeeder');

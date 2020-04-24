@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 
-use Newelement\PackageName\Facades\Shoppe as PackageNameFacade;
+use Newelement\PackageName\Facades\PackageName as PackageNameFacade;
 
 class PackageNameServiceProvider extends ServiceProvider
 {
@@ -21,7 +21,7 @@ class PackageNameServiceProvider extends ServiceProvider
         $loader = AliasLoader::getInstance();
         $loader->alias('PackageName', PackageNameFacade::class);
         $this->app->singleton('packagename', function () {
-            return new Shoppe();
+            return new PackageName();
         });
 
         $this->loadHelpers();

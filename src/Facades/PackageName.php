@@ -3,7 +3,7 @@ namespace Newelement\PackageName\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Shoppe extends Facade
+class PackageName extends Facade
 {
     /**
      * Get the registered name of the component.
