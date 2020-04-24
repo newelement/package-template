@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "newelement/neutrino": "*",
+        "newelement/neutrino": "*"
     },
     "autoload": {
         "psr-4": {
