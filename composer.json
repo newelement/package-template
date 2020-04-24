@@ -31,10 +31,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Newelement\\Shoppe\\PackageServiceProvider"
+                "Newelement\\PackageName\\PackageServiceProvider"
             ],
             "aliases": {
-                "Shoppe": "Newelement\\Package\\Facades"
+                "PackageName": "Newelement\\Package\\Facades"
             }
         }
     }
