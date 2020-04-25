@@ -151,7 +151,7 @@ class PackageNameServiceProvider extends ServiceProvider
         ];
 
         $styles = [
-            '/vendor/newelement/packagename/css/styles.css',
+            '/vendor/newelement/packagename/css/app.css',
         ];
         */
 
