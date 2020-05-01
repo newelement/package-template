@@ -7,7 +7,7 @@ use Symfony\Component\Process\Process;
 use Newelement\PackageName\Traits\Seedable;
 use Newelement\PackageName\PackageNameServiceProvider;
 
-class InstallCommand extends Command
+class UpdateCommand extends Command
 {
     use Seedable;
 
@@ -18,19 +18,19 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $name = 'packagename:install';
+    protected $name = 'packagename:update';
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install the PackageName';
+    protected $description = 'Update the PackageName package';
 
     protected function getOptions()
     {
         return [
             ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production', null],
-            ['with-dummy', null, InputOption::VALUE_NONE, 'Install with dummy data', null],
+            ['with-data', null, InputOption::VALUE_NONE, 'Install with default data', null],
         ];
     }
 
@@ -41,7 +41,6 @@ class InstallCommand extends Command
         }
         return 'composer';
     }
-
     public function fire(Filesystem $filesystem)
     {
         return $this->handle($filesystem);
@@ -49,28 +48,33 @@ class InstallCommand extends Command
 
     public function handle(Filesystem $filesystem)
     {
-        $this->info('Publishing the PackageName assets, database, and config files');
-        // Publish only relevant resources on install
+        $this->info('Updating assets, database, views and config files...');
 
-        $this->call('vendor:publish', ['--provider' => PackageNameServiceProvider::class]); // , '--tag' => $tags
-
-        $this->info('Migrating the database tables into your application');
+        $this->info('Migrating any database changes...');
         $this->call('migrate', ['--force' => $this->option('force')]);
-        $this->info('Dumping the autoloaded files and reloading all new files');
 
+        $this->info('Dumping the autoloaded files and reloading all new files...');
         $composer = $this->findComposer();
         $process = new Process([$composer.' dump-autoload']);
         $process->setTimeout(null);
         $process->setWorkingDirectory(base_path())->run();
 
-        $this->info('Seeding data into the database');
-        $this->seed('PackageNameDatabaseSeeder');
+        $initData = $this->ask('Do you want to update the theme views? CAUTION this will overwrite any views you may have altered. If you do not update the views you may need to update them manually. See documentation for more info. [Y/N]');
+
+        if( $initData === 'y' || $initData === 'Y' ){
+            $this->call('vendor:publish', ['--provider' => 'Newelement\PackageName\PackageNameServiceProvider', '--tag' => 'views', '--force' => true ]);
+        }
+        $this->call('vendor:publish', ['--provider' => 'Newelement\PackageName\PackageNameServiceProvider', '--tag' => 'adminviews', '--force' => true ]);
+
+        $this->info('Updating assets...');
+        $this->call('vendor:publish', ['--provider' => 'Newelement\PackageName\PackageNameServiceProvider', '--tag' => 'public', '--force' => true ]);
 
         $this->info('Clearing application cache...');
         \Storage::disk('public')->delete('assets/css/all.css');
         \Storage::disk('public')->delete('assets/js/all.js');
         $this->call('cache:clear');
 
-        $this->info('Successfully installed PackageName. Enjoy!');
+        $this->info('Successfully updated PackageName.');
+
     }
 }

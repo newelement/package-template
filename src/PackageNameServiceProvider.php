@@ -37,12 +37,14 @@ class PackageNameServiceProvider extends ServiceProvider
     {
 
         $viewsDirectory = __DIR__.'/../resources/views';
+        $adminViewsDirectory = __DIR__.'/../resources/views/admin';
         $publishAssetsDirectory = __DIR__.'/../publishable/assets';
 
         $this->loadViewsFrom($viewsDirectory, 'packagename');
 
         $this->publishes([$viewsDirectory => base_path('resources/views/vendor/packagename')], 'views');
-        $this->publishes([ $publishAssetsDirectory => public_path('vendor/newelement/packagename') ], 'public');
+        $this->publishes([$adminViewsDirectory => base_path('resources/views/vendor/packagename/admin')], 'adminviews');
+        $this->publishes([ $publishAssetsDirectory => public_path('vendor/packagename') ], 'public');
         $this->loadMigrationsFrom(realpath(__DIR__.'/../migrations'));
 
         // Register routes
