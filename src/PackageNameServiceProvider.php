@@ -36,14 +36,16 @@ class PackageNameServiceProvider extends ServiceProvider
     public function boot(Router $router, Dispatcher $event)
     {
 
-        $viewsDirectory = __DIR__.'/../resources/views';
+        $viewsDirectory = __DIR__.'/../resources/views/public';
         $adminViewsDirectory = __DIR__.'/../resources/views/admin';
         $publishAssetsDirectory = __DIR__.'/../publishable/assets';
 
+        // Admin views
+        $this->loadViewsFrom($adminViewsDirectory, 'packagename');
+        // Public views
         $this->loadViewsFrom($viewsDirectory, 'packagename');
 
         $this->publishes([$viewsDirectory => base_path('resources/views/vendor/packagename')], 'views');
-        $this->publishes([$adminViewsDirectory => base_path('resources/views/vendor/packagename/admin')], 'adminviews');
         $this->publishes([ $publishAssetsDirectory => public_path('vendor/packagename') ], 'public');
         $this->loadMigrationsFrom(realpath(__DIR__.'/../migrations'));
 
@@ -116,7 +118,6 @@ class PackageNameServiceProvider extends ServiceProvider
 
     private function registerNeutrinoItems()
     {
-        $bond = app('NeutrinoBond');
 
         /*
         *
@@ -138,9 +139,7 @@ class PackageNameServiceProvider extends ServiceProvider
             ]
         ];*/
 
-        //$bond->registerMenuItems($menuItems);
-
-
+        //registerAdminMenus($menuItems);
 
         /*
         *
@@ -157,11 +156,20 @@ class PackageNameServiceProvider extends ServiceProvider
         ];
         */
 
-        //$bond->enqueueScripts($scripts);
-        //$bond->enqueueStyles($styles);
+        //registerScripts($scripts);
+        //registerStyles($styles);
 
-        //$bond->enqueueAdminScripts($scripts);
-        //$bond->enqueueAdminStyles($styles);
+        //registerAdminScripts($scripts);
+        //registerAdminStyles($styles);
+
+        /*
+        $arr = [
+            'model' => '\\Newelement\\Locations\\Models\\Location',
+            'key' => 'locations'
+        ];
+        */
+
+        //registerSiteMap($arr);
 
     }
 
