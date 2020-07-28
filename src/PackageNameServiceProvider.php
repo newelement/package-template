@@ -114,10 +114,23 @@ class PackageNameServiceProvider extends ServiceProvider
     private function registerConsoleCommands()
     {
         $this->commands(Commands\InstallCommand::class);
+        $this->commands(Commands\UpdateCommand::class);
     }
 
     private function registerNeutrinoItems()
     {
+        /*
+        $packageInfo = [
+            'package_name' => 'PackageName',
+            'version' => '0.7.710',
+            'description' => '',
+            'website' => 'https://neutrinocms.com',
+            'repo' => 'https://github.com/newelement/package-name',
+            'image' => '',
+        ];
+
+        registerPackage($packageInfo);
+        */
 
         /*
         *
